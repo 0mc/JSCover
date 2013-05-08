@@ -398,6 +398,8 @@ function jscoverage_body_load() {
   jscoverage_initTabControl();
 
   jscoverage_initTabContents(location.search);
+  
+  jscoverage_trigger_tab_click();
 }
 
 function jscoverage_body_resize() {
@@ -1147,6 +1149,14 @@ function jscoverage_tab_click(e) {
   if (target.className === 'selected') {
     return;
   }
+  location.hash = '#' + target.id;
+}
+
+function jscoverage_trigger_tab_click() {
+  if (jscoverage_inLengthyOperation) {
+    return;
+  }
+  var target = document.getElementById((location.hash || '#browserTab').substring(1));
   jscoverage_beginLengthyOperation();
   setTimeout(function() {
     if (target.id === 'summaryTab') {
